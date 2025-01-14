@@ -3,12 +3,13 @@
 class Database
 {
     private static $instance;
-    private PDO $connection;
+    private PDO $pdo;
 
     private function __construct()
     {
+        $config = require_once __DIR__ . '/../db_config.php';
         try {
-            $this->connection = new PDO('mysql:dbname=keyce_test;host=localhost;charset=utf8mb4', 'root', '');
+            $this->pdo = new PDO('mysql:dbname=' . $config["db_name"] . ';host=' . $config["db_host"] . ':' . $config["db_port"] . ';charset=utf8mb4', $config["db_user"], $config["db_password"]);
         } catch (PDOException $e) {
             die($e->getMessage());
         }
@@ -21,8 +22,8 @@ class Database
         }
         return self::$instance;
     }
-    public function getConnection(): PDO
+    public function getPDO(): PDO
     {
-        return $this->connection;
+        return $this->pdo;
     }
 }
