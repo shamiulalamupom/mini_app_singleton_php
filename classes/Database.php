@@ -3,8 +3,10 @@
 class Database
 {
     private static $instance;
+
     private PDO $pdo;
 
+    // The constructor is private
     private function __construct()
     {
         $config = require_once __DIR__ . '/../db_config.php';
@@ -15,6 +17,7 @@ class Database
         }
     }
 
+    // This static method will allow use to get an instance of the class
     public static function getInstance(): self
     {
         if (is_null(self::$instance)) {
@@ -22,6 +25,7 @@ class Database
         }
         return self::$instance;
     }
+    // This method will return an instance of PDO
     public function getPDO(): PDO
     {
         return $this->pdo;
